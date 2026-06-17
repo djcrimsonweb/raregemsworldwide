@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { AuthProvider } from '@/lib/auth-context';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-cultural-white text-cultural-black font-modern">
-        <Header />
-        <main className="max-w-7xl mx-auto px-6 py-section">
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main className="max-w-7xl mx-auto px-6 py-section">
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

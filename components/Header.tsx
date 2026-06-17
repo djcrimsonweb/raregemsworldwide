@@ -1,17 +1,19 @@
 import Link from 'next/link';
 import { CATEGORIES } from '@/lib/data';
+import { AuthButtons } from './AuthButtons';
 
 export function Header() {
   return (
     <header className="border-b border-cultural-light-gray sticky top-0 bg-cultural-white z-50">
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Branding */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between">
           <Link href="/">
             <h1 className="font-editorial text-2xl font-bold text-cultural-black hover:opacity-70 transition-opacity">
               RARE GEMS WORLDWIDE
             </h1>
           </Link>
+          <AuthButtons />
         </div>
 
         {/* Navigation */}
@@ -30,6 +32,12 @@ export function Header() {
             className="text-caption font-modern text-cultural-accent hover:opacity-70 transition-opacity uppercase tracking-wider whitespace-nowrap ml-auto md:ml-0 font-semibold"
           >
             GEMS 💎
+          </Link>
+          <Link
+            href="/create-post"
+            className="text-caption font-modern text-cultural-black hover:opacity-70 transition-opacity uppercase tracking-wider whitespace-nowrap font-semibold border border-cultural-black px-3 py-1 rounded"
+          >
+            + POST
           </Link>
         </nav>
       </div>

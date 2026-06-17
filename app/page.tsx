@@ -1,9 +1,34 @@
-import { FeedGrid } from '@/components/FeedGrid';
-import { MOCK_POSTS } from '@/lib/data';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import SocialPostCard from '@/components/SocialPostCard';
+import type { Database } from '@/lib/supabase/types';
+
+type Post = Database['public']['Tables']['posts']['Row'] & {
+  profiles: Database['public']['Tables']['profiles']['Row'];
+};
 
 export default function Home() {
-  const featured = MOCK_POSTS.find(post => post.featured);
-  const regularPosts = MOCK_POSTS.filter(post => !post.featured);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function loadPosts() {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*, profiles(*)')
+        .order('created_at', { ascending: false });
+
+      if (!error) {
+        setPosts(data as Post[]);
+      }
+      setLoading(false);
+    }
+
+    loadPosts();
+  }, []);
 
   return (
     <div>
@@ -14,35 +39,22 @@ export default function Home() {
             Internet Culture
           </h2>
           <p className="text-subheading font-modern text-cultural-gray mb-6">
-            Exploring memes, trends, aesthetics, and emerging cultural movements shaping the digital landscape.
+            Where projects and ideas are born, developed, and launched. Share your journey from concept to launch.
           </p>
-          <div className="flex gap-4 flex-wrap">
-            <button className="px-8 py-3 border border-cultural-black text-cultural-black hover:bg-cultural-black hover:text-cultural-white transition-colors font-modern text-caption uppercase tracking-wider">
-              Create Gem
-            </button>
-            <button className="px-8 py-3 border border-cultural-gray text-cultural-gray hover:bg-cultural-gray hover:text-cultural-white transition-colors font-modern text-caption uppercase tracking-wider">
-              Submit Content
-            </button>
-          </div>
         </div>
       </section>
 
-      {/* Feed */}
-      <FeedGrid posts={regularPosts} featured={featured} />
-
-      {/* CTA Section */}
-      <section className="mt-section pt-section border-t border-cultural-light-gray">
-        <div className="max-w-2xl mx-auto text-center">
-          <h3 className="font-editorial text-heading text-cultural-black mb-6">
-            Contribute to Culture
-          </h3>
-          <p className="text-body font-modern text-cultural-gray mb-8">
-            Have a trend, meme, or cultural moment worth sharing? Submit your discovery to the global feed.
+      {/* Posts Feed */}
+      <section className="space-y-8">
+        {loading ? (
+          <p className="text-center text-cultural-gray">Loading posts...</p>
+        ) : posts.length === 0 ? (
+          <p className="text-center text-cultural-gray">
+            No posts yet. Be the first to share your project!
           </p>
-          <button className="px-8 py-3 bg-cultural-black text-cultural-white hover:opacity-80 transition-opacity font-modern text-caption uppercase tracking-wider">
-            + Add Discovery
-          </button>
-        </div>
+        ) : (
+          posts.map((post) => <SocialPostCard key={post.id} post={post} />)
+        )}
       </section>
     </div>
   );
