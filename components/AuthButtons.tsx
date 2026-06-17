@@ -14,7 +14,7 @@ export function AuthButtons() {
 
   if (!user) {
     return (
-      <div className="flex gap-3">
+      <div className="flex items-center gap-4 whitespace-nowrap">
         <Link
           href="/login"
           className="text-caption font-modern text-cultural-black hover:opacity-70 transition-opacity"

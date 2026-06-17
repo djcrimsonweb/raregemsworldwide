@@ -54,16 +54,49 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-cultural-light-gray pt-8 flex items-center justify-between">
+        <div className="border-t border-cultural-light-gray pt-8 flex items-center justify-between flex-wrap gap-4">
           <p className="text-caption font-modern text-cultural-gray">
             © 2024 Rare Gems Worldwide. All rights reserved.
           </p>
-          <div className="flex gap-4">
-            <a href="#" className="text-caption font-modern text-cultural-gray hover:text-cultural-black transition-colors">
+          <div className="flex gap-6 flex-wrap text-caption font-modern">
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
               Twitter
             </a>
-            <a href="#" className="text-caption font-modern text-cultural-gray hover:text-cultural-black transition-colors">
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              Instagram
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
               Discord
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              Snapchat
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              GitHub
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              Twitch
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              YouTube
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              Spotify
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              SoundCloud
+            </a>
+            <span className="text-cultural-light-gray">/</span>
+            <a href="#" className="text-cultural-gray hover:text-cultural-black transition-colors">
+              Bandcamp
             </a>
           </div>
         </div>

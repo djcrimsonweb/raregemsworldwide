@@ -1,44 +1,111 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { CATEGORIES } from '@/lib/data';
-import { AuthButtons } from './AuthButtons';
+import { useAuth } from '@/lib/auth-context';
 
 export function Header() {
+  const { user, loading } = useAuth();
+  const pathname = usePathname();
+
+  const isActiveTab = (href: string) => {
+    return pathname === href || pathname.startsWith(href + '/');
+  };
+
   return (
-    <header className="border-b border-cultural-light-gray sticky top-0 bg-cultural-white z-50">
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Branding */}
-        <div className="mb-8 flex items-center justify-between">
+    <header style={{ position: 'sticky', top: 0, backgroundColor: '#fff', zIndex: 50 }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+        {/* Top Section: Branding + Auth */}
+        <div style={{ borderBottom: '1px solid #e0e0e0', padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Link href="/">
-            <h1 className="font-editorial text-2xl font-bold text-cultural-black hover:opacity-70 transition-opacity">
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', fontWeight: 700, margin: 0, cursor: 'pointer' }}>
               RARE GEMS WORLDWIDE
             </h1>
           </Link>
-          <AuthButtons />
+          
+          {!loading && !user && (
+            <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+              <Link href="/login" style={{ textDecoration: 'none', color: '#0a0a0a', fontSize: '14px', fontWeight: 500 }}>
+                Sign In
+              </Link>
+              <Link href="/signup" style={{ textDecoration: 'none', color: 'white', backgroundColor: '#0a0a0a', padding: '8px 24px', borderRadius: '4px', fontSize: '14px', fontWeight: 600 }}>
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
 
-        {/* Navigation */}
-        <nav className="flex items-center gap-8 overflow-x-auto pb-4 md:pb-0">
-          {CATEGORIES.map((category) => (
-            <Link
-              key={category}
-              href={`/category/${category.toLowerCase().replace(/\s+/g, '-').replace('/', '')}`}
-              className="text-caption font-modern text-cultural-gray hover:text-cultural-black transition-colors uppercase tracking-wider whitespace-nowrap"
-            >
-              {category}
-            </Link>
-          ))}
+        {/* Tab Navigation */}
+        <nav style={{ display: 'flex', borderBottom: '1px solid #e0e0e0', overflow: 'auto' }}>
+          {CATEGORIES.map((category) => {
+            const href = `/category/${category.toLowerCase().replace(/\s+/g, '-').replace('/', '')}`;
+            const isActive = isActiveTab(href);
+            
+            return (
+              <Link
+                key={category}
+                href={href}
+                style={{
+                  padding: '16px 24px',
+                  textDecoration: 'none',
+                  color: isActive ? '#0a0a0a' : '#888',
+                  fontSize: '12px',
+                  fontWeight: isActive ? 700 : 500,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0,
+                  borderBottom: isActive ? '2px solid #0a0a0a' : '2px solid transparent',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {category}
+              </Link>
+            );
+          })}
+          
+          {/* GEMS Tab */}
           <Link
             href="/gems"
-            className="text-caption font-modern text-cultural-accent hover:opacity-70 transition-opacity uppercase tracking-wider whitespace-nowrap ml-auto md:ml-0 font-semibold"
+            style={{
+              padding: '16px 24px',
+              textDecoration: 'none',
+              color: isActiveTab('/gems') ? '#d4af37' : '#888',
+              fontSize: '12px',
+              fontWeight: isActiveTab('/gems') ? 700 : 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              borderBottom: isActiveTab('/gems') ? '2px solid #d4af37' : '2px solid transparent',
+              transition: 'all 0.2s ease'
+            }}
           >
-            GEMS 💎
+            GEMS
           </Link>
-          <Link
-            href="/create-post"
-            className="text-caption font-modern text-cultural-black hover:opacity-70 transition-opacity uppercase tracking-wider whitespace-nowrap font-semibold border border-cultural-black px-3 py-1 rounded"
-          >
-            + POST
-          </Link>
+
+          {/* POST Button (right side) */}
+          <div style={{ marginLeft: 'auto' }}>
+            <Link
+              href="/create-post"
+              style={{
+                display: 'inline-block',
+                padding: '16px 24px',
+                textDecoration: 'none',
+                color: '#0a0a0a',
+                fontSize: '12px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                whiteSpace: 'nowrap',
+                borderBottom: '2px solid transparent',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              + POST
+            </Link>
+          </div>
         </nav>
       </div>
     </header>

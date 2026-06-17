@@ -31,19 +31,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="mb-20">
-        <div className="max-w-4xl mb-12">
-          <h2 className="font-editorial text-display text-cultural-black mb-6">
-            Internet Culture
-          </h2>
-          <p className="text-subheading font-modern text-cultural-gray mb-6">
-            Where projects and ideas are born, developed, and launched. Share your journey from concept to launch.
-          </p>
-        </div>
-      </section>
-
+    <div style={{ backgroundColor: '#fff', minHeight: '100vh' }}>
       {/* Posts Feed */}
       <section className="space-y-8">
         {loading ? (
